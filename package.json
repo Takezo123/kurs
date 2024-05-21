@@ -1,0 +1,26 @@
+{
+  "name": "kurs",
+  "version": "1.0.0",
+  "description": "abobA",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Takezo123/kurs.git"
+  },
+  "author": "Bulatkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Takezo123/kurs/issues"
+  },
+  "homepage": "https://github.com/Takezo123/kurs#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
