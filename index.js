@@ -11,7 +11,10 @@ app.get('/', (req, res) => {
 
 app.post('/user/login', (req, res) => {
     console.log(req.body);
-    const token = jwt.sign({}
+    const token = jwt.sign({
+        email: req.body.email,
+        password: <PASSWORD>
+    }
     res.json(
         { "status": "success",
             "message": "User logged in successfully"}
