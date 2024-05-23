@@ -1,37 +1,67 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-const app = express()
+import mongoose from'mongoose';
+import bcrypt from 'bcrypt';
 
+import { validationChain } from'./validation/auth.js';
+import {validationResult} from 'express-validator';
+import User from './models/user.js';
+import req from "express/lib/request.js";
+
+const PORT = process.env.PORT || 3000
+
+mongoose
+    .connect('mongodb+srv://admin:admin@cluster0.9ww5wjm.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err)=> console.log('could not connect to MongoDB', err));
+
+
+const app = express();
+
+app.set('view engine', 'ejs');
 app.use(express.json())
 
 
-app.get('/', (req, res) => {
-    res.render('index')
-})
 
-app.post('/user/login', (req, res) => {
-    console.log(req.body);
-    const token = jwt.sign({
-        email: req.body.email,
-        FullName: 'Вася пупкин',
-    },'secret_key',);
-    res.json(
-        { "status": "success",
-            "message": "User logged in successfully",
-            token,
+app.post('/user/register', validationChain, async (req, res) => {
+    try {const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()});
+        }
+        const password= req.body.password;
+        const salt= await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        const doc = new User({
+            email: req.body.email,
+            name: req.body.name,
+            avatarUrl: req.body.avatarUrl,
+            passwordHash,
         });
+
+        const user = await doc.save();
+        res.json(user);}catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Something went wrong",
+        });
+    }
 });
 
-// app.get('/about', (req, res) => {
-//     res.render('about')
-// })
+// const password= req.body.password;
+// const salt= await bcrypt.genSalt(10);
+// const passwordHash = await bcrypt.hash(password, salt);
+//
+// const doc = new User({
+//     email: req.body.email,
+//     name: req.body.name,
+//     avatarUrl: req.body.avatarUrl,
+//     passwordHash,
+// });
 
-// app.get('/user/:name', (req, res) => {
-//     let data ={username: req.params.name, hobbies: ['football', 'basketball']}
-//     res.render('user',data)
-// })
+// const user = await doc.save();
 
-const PORT = process.env.PORT || 3000
+// const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
     console.log('Server is running on port:'+ PORT)
