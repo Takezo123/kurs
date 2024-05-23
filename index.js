@@ -13,13 +13,14 @@ app.post('/user/login', (req, res) => {
     console.log(req.body);
     const token = jwt.sign({
         email: req.body.email,
-        password: <PASSWORD>
-    }
+        FullName: 'Вася пупкин',
+    },'secret_key',);
     res.json(
         { "status": "success",
-            "message": "User logged in successfully"}
-    )
-})
+            "message": "User logged in successfully",
+            token,
+        });
+});
 
 // app.get('/about', (req, res) => {
 //     res.render('about')
