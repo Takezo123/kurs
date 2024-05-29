@@ -20,7 +20,21 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.json())
 
+app.post('/user/login', validationChain, async  (req, res)  => {
+    try  {
+        const user= await User.findOne({email: req.body.email});
+        if (!user)  {
+        return res.status(404).json({message: 'User not found'});
+    }
+    const password = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+        if (!password)   {
+            return res.status(401).json({message: 'Invalid password'});
+        }
+    const token = jwt.sign({_id: user._id}, "secret", {expiresIn: '35d',},);
 
+    }
+ catch  (err)  {}
+});
 
 app.post('/user/register', validationChain, async (req, res) => {
     try {
@@ -52,21 +66,6 @@ app.post('/user/register', validationChain, async (req, res) => {
         });
     }
 });
-
-// const password= req.body.password;
-// const salt= await bcrypt.genSalt(10);
-// const passwordHash = await bcrypt.hash(password, salt);
-//
-// const doc = new User({
-//     email: req.body.email,
-//     name: req.body.name,
-//     avatarUrl: req.body.avatarUrl,
-//     passwordHash,
-// });
-
-// const user = await doc.save();
-
-// const PORT = process.env.PORT || 3000
 
 const server = app.listen(0, () => {
     console.log('Server listening on port:', server.address().port);
