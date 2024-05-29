@@ -20,27 +20,30 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.json())
 
-app.post('/user/login', validationChain, async  (req, res)  => {
-    try  {
-        const user= await User.findOne({email: req.body.email});
-        if (!user)  {
-        return res.status(404).json({message: 'User not found'});
-    }
-    const password = await bcrypt.compare(req.body.password, user._doc.passwordHash);
-        if (!password)   {
-            return res.status(401).json({message: 'Invalid password'});
+app.post('/user/login', validationChain, async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
-    const token = jwt.sign({_id: user._id}, "secret", {expiresIn: '35d',},);
-
+        const password = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+        if (!password) {
+            return res.status(401).json({ message: 'Invalid password' });
+        }
+        const token = jwt.sign({ _id: user._id }, "secret", { expiresIn: '35d', });
+        const { passwordHash, ...userData } = user.toObject();
+        res.json({ ...userData, token }); // Отправляем данные пользователя и токен
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Something went wrong" }); // Обрабатываем общую ошибку
     }
- catch  (err)  {}
 });
 
 app.post('/user/register', validationChain, async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
+            return res.status(422).json({ errors: errors.array() });
         }
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
@@ -54,18 +57,16 @@ app.post('/user/register', validationChain, async (req, res) => {
         });
 
         const user = await doc.save();
-        const token = jwt.sign({_id: user._id}, "secret", {expiresIn: '35d',},);
+        const token = jwt.sign({ _id: user._id }, "secret", { expiresIn: '35d', });
 
-        const {passwordHash, ...userData} = user.toObject();
-        res.json(userData);
-        res.json({...userData, token});
-    }catch (err) {
+        const { passwordHash, ...userData } = user.toObject();
+        res.json({ ...userData, token }); // Отправляем данные пользователя и токен
+    } catch (err) {
         console.log(err);
-        res.status(500).json({
-            message: "Something went wrong",
-        });
+        res.status(500).json({ message: "Something went wrong" }); // Обрабатываем общую ошибку
     }
 });
+
 
 const server = app.listen(0, () => {
     console.log('Server listening on port:', server.address().port);
@@ -79,4 +80,5 @@ app.listen(PORT, () => {
         console.error('Error starting server:', err);
     }
 });
+
 
