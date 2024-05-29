@@ -71,6 +71,16 @@ app.post('/user/register', validationChain, async (req, res) => {
 const server = app.listen(0, () => {
     console.log('Server listening on port:', server.address().port);
 });
+
+
+app.get()
+
+
+
+
+
+
+
 app.listen(PORT, () => {
     console.log('Server is running on port:', PORT);
 }).on('error', (err) => {
