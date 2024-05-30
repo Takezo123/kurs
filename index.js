@@ -56,6 +56,7 @@ app.post('/user/register', validationChain, async (req, res) => {
             passwordHash: hash,
         });
 
+ dev
         const user = await doc.save();
         const token = jwt.sign({ _id: user._id }, "secret", { expiresIn: '35d', });
 
@@ -64,8 +65,14 @@ app.post('/user/register', validationChain, async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Something went wrong" }); // Обрабатываем общую ошибку
-    }
-});
+
+app.post('/user/login', (req, res) => {
+    console.log(req.body);
+    const token = jwt.sign({
+        email: req.body.email,
+
+
+      
 
 
 const server = app.listen(0, () => {
