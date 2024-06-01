@@ -1,0 +1,123 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+
+}
+body{
+    background-color: white;
+    color: black;
+    font-family: "Oswald", sans-serif;
+   
+ 
+}
+.wrapper{
+    width: 1024px;
+    margin: 50px auto;
+}
+header .logo{
+    font-weight: 500;
+    font-size: 20px;
+}
+header ul.nav{
+    float:right;
+    list-style: none;
+}
+header ul.nav li{
+    display:inline ;
+    margin-left: 25px;
+    cursor: pointer;
+    transition: opacity 500ms ease;
+}
+header ul.nav li:hover{
+    opacity: 0.6;
+}
+header .presentation{
+    margin:50px auto;
+    background: url('./img/L2TivyMrvEs.jpg') no-repeat;
+    width: 100%;
+    height: 540px;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: multiply;
+    background-color: lightgray;
+    position: relative;
+    
+}
+header .presentation::after{
+    content: 'The council will decide';
+    color: orange;
+    position: absolute;
+    top: 10px;
+    left: 45px;
+    /* width: 300px; */
+    font-size: 40px;
+} 
+ header .presentation::before{
+    content: 'your faith';
+    color: orange;
+    position: absolute;
+    top: 10px;
+    left: 660px;
+    width: 300px;
+    font-size: 40px;
+} 
+footer{
+    text-align: center;
+    margin-top: 10px;
+}
+main{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 50px;
+}
+main .item{
+    display: inline-flex;
+    width: 30%;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+    border-radius: 60px;
+    border: 1px solid #ccc;
+    position: relative;
+    padding-bottom: 20px;
+    
+}
+main .item img{
+    width: 250px;
+    height: 200px;
+    border-radius: 10px 10px 0 0; 
+    transition: transform  200ms ease;
+}
+main .item img:hover{
+    transform: scale(1.05);
+}
+main h2, main p, main b{
+    margin: 10px 20px;
+    color: #333;
+}
+main b{
+    color: #5fa36a;
+}
+main .add-to-cart{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: #5fa36a;
+    width: 35px;
+    text-align: center;
+    line-height: 35px;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform  200ms ease;
+}
+main .add-to-cart:hover{
+    transform: scale(1.3)translateY(-5px);
+    
+
+}
