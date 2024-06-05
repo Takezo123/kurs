@@ -1,5 +1,5 @@
 import mongoose from'mongoose';
-import jwt from 'jsonwebtoken'; //npm install jsonwebtoken
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
