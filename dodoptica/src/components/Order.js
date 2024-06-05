@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { RxCross2 } from "react-icons/rx";
 
 export class Order extends Component {
   render() {
@@ -7,6 +8,7 @@ export class Order extends Component {
         <img src={"./img/"+this.props.item.Image} alt='' />
         <h2>{this.props.item.title}</h2>
         <b>{this.props.item.price} $</b>
+        <RxCross2 className='delete-item' onClick={()=> this.props.onDelete(this.props.item.id)} />
       </div>
     )
   }

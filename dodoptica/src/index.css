@@ -84,6 +84,19 @@ header .shop-cart .item{
     margin-bottom: 20px;
 
 }
+header .shop-cart .item .delete-item{
+    color: rgb(218, 142, 142);
+    float: right;
+    position: relative;
+    top: -40px;
+    cursor: pointer;
+    transition: color, transform 200ms ease;
+    scale: 2;
+}
+header .shop-cart .item .delete-item:hover{
+    color: rgb(233, 48, 48);
+    transform: scale(1.2);
+}
 header .shop-cart .item img{
     width: 70px;
     float: left;
@@ -108,6 +121,13 @@ header .presentation::after{
     /* width: 300px; */
     font-size: 40px;
 } 
+header .shop-cart .sum{
+    float: left;
+    width: 100%;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
  header .presentation::before{
     content: 'your faith';
     color: orange;
@@ -176,3 +196,18 @@ main .add-to-cart:hover{
 
 }
 
+.categories div{
+    display: inline-block;
+    background: #d5ffc5;
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin-bottom: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+    border: 2px solid  transparent;
+    transition: all 200ms ease;
+}
+.categories div:hover{
+    border-color: green ;
+    transform: scale(1.2);
+}

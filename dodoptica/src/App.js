@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Items from "./components/Items.js";
+import Categories from "./components/Categories.js";
 // import Order from "./components/Order.js";
 
 
@@ -51,11 +52,13 @@ class App extends React.Component {
       ]
     }
     this.addToOrder=this.addToOrder.bind(this)
+    this.deleteOrder=this.deleteOrder.bind(this)
   }
   render(){
     return (
     <div className="wrapper">
-      <Header orders={this.state.orders} />
+      <Header orders={this.state.orders} onDelete={this.deleteOrder} />
+      <Categories />
       <Items items={this.state.items} onAdd={this.addToOrder} />
       <Footer />  
         
@@ -63,6 +66,11 @@ class App extends React.Component {
 
   )   
   }
+
+  deleteOrder(id){
+    this.setState({orders: this.state.orders.filter(el  => el.id !== id)})  
+  }
+
   addToOrder(item) {
     let isInArray= false
     this.state.orders.forEach(el => {
