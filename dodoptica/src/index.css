@@ -16,14 +16,33 @@ body{
     width: 1024px;
     margin: 50px auto;
 }
+header{
+    position: relative;
+}
 header .logo{
     font-weight: 500;
     font-size: 20px;
+}
+header .nav-box{
+    height: auto;
+}
+header .cart-button{
+    float: right;
+    cursor: pointer;
+    transition: color, transform 500ms ease;
+    width: 70px;
+    height: 44px;
+}
+header .cart-button:hover,
+header .cart-button.active{
+    color: orange;
+    transform: scale(1.2);
 }
 header ul.nav{
     float:right;
     list-style: none;
 }
+
 header ul.nav li{
     display:inline ;
     margin-left: 25px;
@@ -44,6 +63,41 @@ header .presentation{
     background-color: lightgray;
     position: relative;
     
+}
+header .shop-cart{
+    position: absolute;
+    top: 80px;
+    right: 0;
+    width: 450px;
+    padding: 20px;
+    padding-bottom: 0;
+    background-color: #fafafa;
+    -webkit-box-shadow: 10px 10px 54px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 54px -1px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 54px -1px rgba(0,0,0,0.75);
+    z-index: 9999;
+    }
+
+header .shop-cart .item{
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+
+}
+header .shop-cart .item img{
+    width: 70px;
+    float: left;
+    margin-right: 20px;
+    
+}
+header .shop-cart .item h2{
+    font-size: 20px;
+    margin-bottom: 10px;
+
+}
+header .shop-cart .item p{
+    color: #797979;
+    font-weight:600 ;
 }
 header .presentation::after{
     content: 'The council will decide';
@@ -121,3 +175,4 @@ main .add-to-cart:hover{
     
 
 }
+
