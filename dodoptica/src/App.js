@@ -3,16 +3,16 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Items from "./components/Items.js";
 import Categories from "./components/Categories.js";
-// import Order from "./components/Order.js";
+
 
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      orders:[],
-      currentItems:[],
-      items:[
+      orders: [],
+      currentItems: [],
+      items: [
         {
           id:1,
           title:"Title 1",
@@ -63,7 +63,7 @@ class App extends React.Component {
     <div className="wrapper">
       <Header orders={this.state.orders} onDelete={this.deleteOrder} />
       <Categories chooseCategory={this.chooseCategory} />
-      <Items items={this.state.items} onAdd={this.addToOrder} />
+      <Items items={this.state.currentItems} onAdd={this.addToOrder} />
       <Footer />  
         
       </div>
@@ -71,9 +71,16 @@ class App extends React.Component {
   )   
   }
 
-  chooseCategory(category){console.log(category)
+  chooseCategory(category){
+
+    console.log(category)
+    if(category==='all'){
+      this.setState({currentItems: this.state.items})
+      return
+    }
+    
       this.setState({
-        currentItems: this.state.currentItems.filter(el => el.category === category)})
+        currentItems: this.state.items.filter(el => el.category === category)})
   
   }
 
