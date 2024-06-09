@@ -13,6 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       ShowFullItem: false,
+
       orders: [],
       currentItems: [],
       items: [
@@ -53,7 +54,8 @@ class App extends React.Component {
 
         },
        
-      ]
+      ],
+      fullItem:{}
       
     }
     this.state.currentItems=this.state.items
@@ -69,14 +71,15 @@ class App extends React.Component {
       <Header orders={this.state.orders} onDelete={this.deleteOrder} />
       <Categories chooseCategory={this.chooseCategory} />
       <Items onShowItem={this.onShowItem} items={this.state.currentItems} onAdd={this.addToOrder} />
-      {this.state.ShowFullItem && <ShowFullItem/>}
+      {this.state.ShowFullItem && <ShowFullItem onShowItem={this.onShowItem}  onAdd={this.addToOrder} item={this.state.fullItem}/>}
       <Footer />  
         
       </div>
 
   )   
   }
-  onShowItem(){
+  onShowItem(item){
+    this.setState({fullItem: item})
     this.setState({ShowFullItem: !this.state.ShowFullItem})
   }
   chooseCategory(category){
