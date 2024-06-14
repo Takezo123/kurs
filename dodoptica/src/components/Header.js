@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { CiPizza } from 'react-icons/ci';
 import Order from './Order';
-import LoginPopup from './LoginPopup';
-import RegisterModal from './RegisterModal';
 
 const showOrders = (props) => {
   let sum = 0;
@@ -29,13 +27,6 @@ const showNothing = () => {
 const Header = (props) => {
   const [cartOpen, setCartOpen] = useState(false);
 
-  const handleLoginClick = () => {
-    props.onLoginClick(); // Вызываем функцию из props для открытия pop-up для логина
-  };
-
-  const handleRegisterClick = () => {
-    props.onRegisterClick(); // Вызываем функцию из props для открытия модального окна для регистрации
-  };
 
   return (
     <header>
@@ -44,22 +35,6 @@ const Header = (props) => {
         <ul className="nav">
           <li>Про нас</li>
           <li>Контакты</li>
-          {props.isLoggedIn ? (
-            <>
-              <li onClick={props.onLogout} style={{ cursor: 'pointer' }}>
-                Выход
-              </li>
-            </>
-          ) : (
-            <>
-              <li onClick={handleLoginClick} style={{ cursor: 'pointer' }}>
-                Войти
-              </li>
-              <li onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>
-                Зарегистрироваться
-              </li>
-            </>
-          )}
         </ul>
         <CiPizza
           onClick={() => setCartOpen(!cartOpen)}
@@ -72,12 +47,8 @@ const Header = (props) => {
           </div>
         )}
       </div>
-      <div className="presentation"></div>
+      {/* <div className="presentation"></div> */}
 
-      {props.showLoginPopup && <LoginPopup onClose={props.onCloseLoginPopup} />}
-      {props.showRegisterModal && (
-        <RegisterModal onClose={props.onCloseRegisterModal} />
-      )}
     </header>
   );
 };
