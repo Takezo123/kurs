@@ -1,85 +1,70 @@
-// controllers/UserController.js
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { validationResult } from 'express-validator';
-import User from '../models/user.js';
+import userModel from "../models/userModel.js";
+import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
+import validator from "validator"
+import { response } from "express";
 
-export const register = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+
+//login user
+const loginUser = async (req,res)=>{
+    const {email,password}=req.body;
+    try {
+        const user =await userModel.findOne({email});
+        if (!user) {
+            return res.json({success:false,message:"User Doesn't exists"})
+        }
+        const isMatch= await bcrypt.compare(password,user.password)
+
+        if (!isMatch) {
+            return res.json({success:false,message:"Invalid Credentials"})
+        }
+        const token=createToken(user._id);
+        res.json({success:true,token})
+
+
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"})
     }
-
-    const { name, email, password } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    const user = new User({
-      name,
-      email,
-      passwordHash,
-    });
-
-    await user.save();
-
-    const token = jwt.sign({ _id: user._id }, 'secret', { expiresIn: '35d' });
-    const { passwordHash: _, ...userData } = user.toObject();
-
-    res.json({ ...userData, token });
-  } catch (err) {
-    console.error('Error during registration:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+}
+const createToken=(id)=>{
+    return jwt.sign({id},process.env.JWT_SECRET)
 }
 
-export const login = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+//register user
+const registerUser = async (req,res)=>{
+    const {name ,password,email}=req.body;
+    try {
+        //checking use exits or not
+        const exists=await userModel.findOne({email});
+        if(exists){
+            return res.json({success:false,message:"User already exists"})
+        }
+        // validateing email and password
+        if(!validator.isEmail(email)){
+            return res.json({success:false,message:"Please Enter a valid E-mail"})
+        }
+        if(password.length<8){
+            return res.json({success:false,message:"Please enter a strong password"})
+        }
+
+        //hashing user password
+        const salt= await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password,salt);
+
+        const newUser = new userModel({
+            name:name,
+            email:email,
+            password:hashedPassword
+        })
+
+        const user = await newUser.save()
+        const token= createToken(user._id)
+        res.json({success:true,token})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"})
     }
-
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    const isValidPassword = await bcrypt.compare(password, user.passwordHash);
-
-    if (!isValidPassword) {
-      return res.status(400).json({ message: 'Invalid password' });
-    }
-
-    const token = jwt.sign({ _id: user._id }, 'secret', { expiresIn: '35d' });
-    const { passwordHash: _, ...userData } = user.toObject();
-
-    res.json({ ...userData, token });
-  } catch (err) {
-    console.error('Error during login:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
 }
 
-export const getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    const { passwordHash, ...userData } = user.toObject();
-    res.json(userData);
-  } catch (err) {
-    console.error('Error fetching user:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
+export {loginUser,registerUser};
