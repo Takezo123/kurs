@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Items from './components/Items';
 import Categories from './components/Categories';
 import ShowFullItem from './components/ShowFullitem';
+import Login from './components/Login'; // Create the Login component
 
 function App() {
   const [showFullItem, setShowFullItem] = useState(false);
@@ -11,8 +12,12 @@ function App() {
   const [items, setItems] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [fullItem, setFullItem] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
 
-  // Загрузка данных из сервера при монтировании компонента
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -58,6 +63,11 @@ function App() {
           orders={orders}
           onDelete={deleteOrder}  
         />
+        <Login />
+        <div>
+      <button onClick={togglePopup}>Login</button>
+      {showPopup && <Login toggle={togglePopup} />}
+    </div>
         <Categories chooseCategory={chooseCategory} />
         <Items onShowItem={onShowItem} items={currentItems} onAdd={addToOrder} />
         {showFullItem && <ShowFullItem onShowItem={onShowItem} onAdd={addToOrder} item={fullItem} />}
