@@ -22,10 +22,9 @@ const Navbar = ({setShowLogin}) => {
         <div className='navbar'>
         <Link to='/'><img src={assets.logo} alt='' className='logo'/></Link>
         <ul className='navbar-menu'>
-            <Link to='/' onClick={()=>setMenu("home")} className={menu==="home"?"active":""}>Home</Link>
-            <a href='#explore-menu' onClick={()=>setMenu("menu")} className={menu==="menu"?"active":""}>Menu</a>
-            <a href='#app-download' onClick={()=>setMenu("mobile-app")} className={menu==="mobile-app"?"active":""}>Mobile-App</a>
-            <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu==="contact-us"?"active":""}>Contact Us</a>
+            <Link to='/' onClick={()=>setMenu("home")} className={menu==="home"?"active":""}>Домой</Link>
+            <a href='#explore-menu' onClick={()=>setMenu("menu")} className={menu==="menu"?"active":""}>Меню</a>
+            <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu==="contact-us"?"active":""}>Обратная связь</a>
         </ul>
         
         <div className="navbar-right">
@@ -34,13 +33,13 @@ const Navbar = ({setShowLogin}) => {
                 <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link>
                 <div className={getTotalCartAmount()===0?"":"dot"}></div>
             </div>
-            {!token?<button onClick={()=>setShowLogin(true)} >Sign in</button>
+            {!token?<button onClick={()=>setShowLogin(true)} >Войти</button>
             : <div className="navbar-profile">
                 <img src={assets.profile_icon} alt=''></img>
                 <ul className="nav-profile-dropdown">
-                    <li onClick={()=>navigate('/myorders')}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+                    <li onClick={()=>navigate('/myorders')}><img src={assets.bag_icon} alt="" /><p>Мои заказы</p></li>
                     <hr />
-                    <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
+                    <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Выйти</p></li>
                 </ul>
             </div>
             }

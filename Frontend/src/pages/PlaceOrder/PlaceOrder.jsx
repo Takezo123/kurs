@@ -68,43 +68,43 @@ const PlaceOrder = () => {
 
     <form onSubmit={placeOrder} className='place-order'>
       <div className="place-order-left">
-        <p className="title">Delivery Information</p>
+        <p className="title">Информация о доставке</p>
         <div className="multi-fields">
-          <input required name='firstName' onChange={onChangeHandler} value={data.firstName} type="text" placeholder='First Name'/>
-          <input required name='lastName'onChange={onChangeHandler} value={data.lastName} type="text" placeholder='Last Name'/>
+          <input required name='firstName' onChange={onChangeHandler} value={data.firstName} type="text" placeholder='Имя'/>
+          <input required name='lastName'onChange={onChangeHandler} value={data.lastName} type="text" placeholder='Фамилия'/>
         </div>
-        <input required name='email' onChange={onChangeHandler} value={data.email}  type="email" placeholder='Email Address'/>
-        <input  required name='street' onChange={onChangeHandler} value={data.street} type="text" placeholder='Street' />
+        <input required name='email' onChange={onChangeHandler} value={data.email}  type="email" placeholder='Email'/>
+        <input  required name='street' onChange={onChangeHandler} value={data.street} type="text" placeholder='Улица' />
         <div className="multi-fields">
-          <input  required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='City'/>
-          <input required name='state' onChange={onChangeHandler} value={data.state} type="text" placeholder='State'/>
+          <input  required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='Город'/>
+          <input required name='state' onChange={onChangeHandler} value={data.state} type="text" placeholder='Область'/>
         </div>
         <div className="multi-fields">
           <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} type="text" placeholder='Zip code'/>
-          <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country'/>
+          <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Страна'/>
         </div>
-        <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone'/>
+        <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Номер телефона'/>
       </div>
       <div className="place-order-right">
       <div className="cart-total">
-          <h2>Cart Totals</h2>
+          <h2>Итого</h2>
           <div>
             <div className='cart-total-details'>
-              <p>Subtotal</p>
+              <p>Сумма товаров</p>
               <p>${getTotalCartAmount()}</p>
             </div>
             <hr/>
             <div className='cart-total-details'>
-              <p>Delivery Fee</p>
+              <p>Цена доставки</p>
               <p>${getTotalCartAmount()===0?0:2}</p>
             </div>
             <hr/>
             <div className='cart-total-details'>
-              <b>Total</b>
+              <b>Всего</b>
               <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
             </div>
           </div>
-            <button type='submit'>PROCEED TO PAYMENT</button>
+            <button type='submit'>Оплатить</button>
         </div>
       </div>
 

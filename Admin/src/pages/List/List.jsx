@@ -37,7 +37,7 @@ const List = ({url}) => {
 
 
     <div className='list add flex-col'>
-      <p>All Foods List</p>
+      <p>Список всех продуктов</p>
       <div className="list-table">
         <div className="list-table-format title">
           <b>Image</b>

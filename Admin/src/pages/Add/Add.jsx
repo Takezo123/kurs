@@ -67,7 +67,7 @@ const Add = ({url}) => {
             </div>
             <div className="add-category-price">
                 <div className="add-category flex-col">
-                    <p>Product category</p>
+                    <p>Категория продукта</p>
                     <select onChange={onChangeHandler} name="category" >
                         <option value="Salad">Salad</option>
                         <option value="Rolls">Rolls</option>
@@ -80,11 +80,11 @@ const Add = ({url}) => {
                     </select>
                 </div>
                 <div className="add-price flex-col">
-                    <p>Product Price</p>
+                    <p>Цена продукта</p>
                     <input onChange={onChangeHandler} value={data.price} type="Number" name='price' placeholder='$20'/>
                 </div>
             </div>
-                <button type='submit' className='add-btn'>Add</button>
+                <button type='submit' className='add-btn'>Добавить</button>
         </form>
 
     </div>
