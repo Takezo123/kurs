@@ -48,4 +48,26 @@ const removeFood=async(req,res)=>{
         res.json({success:false,message:"Error"})        
     }
 }
-export {addFood,listFood,removeFood}
+
+
+const addSaleProduct = async (req, res) => {
+    try {
+        const { name, description, price, category } = req.body;
+        const image = req.file ? req.file.filename : '';
+
+        const newFood = new foodModel({
+            name,
+            description,
+            price,
+            category,
+            image,
+            onSale: true // Indicates this product is on sale
+        });
+
+        await newFood.save();
+        res.status(201).json({ success: true, message: 'Sale product added successfully', data: newFood });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+export {addFood,listFood,removeFood,addSaleProduct}
