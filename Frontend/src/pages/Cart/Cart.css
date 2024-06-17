@@ -70,6 +70,8 @@
     align-items: center;
     background-color: #eaeaea;
     border-radius: 4px;
+    width: 400px;
+    flex-wrap: wrap;
 }
 .cart-promocode-input input{
     background: transparent;
@@ -85,6 +87,12 @@
     color: white;
     border-radius: 4px;
 }
+.cart-promocode-input b{
+    margin: 5px;
+    padding: 5px;
+    color: green;
+
+}
 @media (max-width:750px) {
     .cart-bottom{
         flex-direction: column-reverse;
@@ -93,3 +101,4 @@
         justify-content: start;
     }
 }
+

@@ -18,6 +18,14 @@ const PlaceOrder = () => {
     country:"",
     phone:""
   })
+  const [discount, setDiscount] = useState(0);
+  useEffect(() => {
+    // Fetch discount from localStorage
+    const savedDiscount = localStorage.getItem('discount');
+    if (savedDiscount) {
+      setDiscount(parseFloat(savedDiscount));
+    }
+  }, []);
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -51,7 +59,7 @@ const PlaceOrder = () => {
   }
 
   const navigate = useNavigate();
-
+ 
   useEffect(()=>{
     if (!token){
       navigate('/cart')

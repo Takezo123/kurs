@@ -16,6 +16,7 @@ const Cart = () => {
       const response = await axios.post(url+"/api/coupons/apply", { code: couponCode }); // Correct URL
       setDiscount(response.data.discount);
       setError('');
+      localStorage.setItem('discount', response.data.discount);
     } catch (err) {
       setError(err.response.data.error);
       setDiscount(0);
@@ -83,8 +84,9 @@ const Cart = () => {
           </div>
           <button onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
         </div>
-        <div>
-          <h2>Checkout</h2>
+        <div className='cart-promocode'>
+          <p>Checkout</p>
+          <div className='cart-promocode-input'>
           <input
             type="text"
             placeholder="Enter coupon code"
@@ -93,7 +95,8 @@ const Cart = () => {
           />
           <button onClick={applyCoupon}>Apply Coupon</button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          {discount > 0 && <p>Discount Applied: {discount}%</p>}
+          {discount > 0 && <b>Discount Applied: {discount}%</b>}
+          </div>
         </div>
       </div>
     </div>
