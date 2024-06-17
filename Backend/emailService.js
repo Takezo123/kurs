@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 // Function to send email
 const sendOrderEmail = (orderDetails) => {
   const mailOptions = {
-    from: 'Dodoptica187@gmail.com', // Sender address
+    from: 'Dodoptica188@mail.ru', // Sender address
     to: orderDetails.email, // List of recipients
     subject: 'Order Confirmation', // Subject line
     text: `Thank you for your order!\n\nHere are your order details:\n${orderDetailsSummary(orderDetails)}` // Plain text body
@@ -42,3 +42,4 @@ Total Amount: $${orderDetails.amount}
 };
 
 export default sendOrderEmail;
+UB1JP3ZSSU967EUMVJULZDA9
