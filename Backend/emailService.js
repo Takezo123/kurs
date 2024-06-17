@@ -42,4 +42,4 @@ Total Amount: $${orderDetails.amount}
 };
 
 export default sendOrderEmail;
-UB1JP3ZSSU967EUMVJULZDA9
+// UB1JP3ZSSU967EUMVJULZDA9
