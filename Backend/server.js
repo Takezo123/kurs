@@ -7,7 +7,7 @@ import cartRouter from "./routes/cartRoute.js"
 import "dotenv/config.js"
 import orderRouter from "./routes/orderRoute.js"
 import couponRoutes from './routes/couponRoutes.js';
-import saleRouter from './routes/saleRoute.js';
+import saleRouter from "./routes/saleRoute.js";
 
 //app config
 const app=express()

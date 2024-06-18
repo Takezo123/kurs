@@ -9,15 +9,15 @@ const DailySales = () => {
     useEffect(() => {
         const fetchDailySales = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/sales/daily');
-                setSales(response.data);
+              const response = await axios.get('http://localhost:4000/api/sales/daily');
+              console.log('Daily sales data:', response.data);
+              setSales(response.data);
             } catch (error) {
-                setError(error.message);
+              setError(error.message);
             } finally {
-                setLoading(false);
+              setLoading(false);
             }
-        };
-
+          };
         fetchDailySales();
     }, []);
 
@@ -27,16 +27,16 @@ const DailySales = () => {
 
     return (
         <div>
-            <h2>Daily Sales</h2>
-            <ul>
-                {sales.map((sale, index) => (
-                    <li key={index}>
-                        {sale.itemName}: {sale.quantity} units sold at ${sale.price} each
-                    </li>
-                ))}
-            </ul>
+          <h2>Daily Sales</h2>
+          <ul>
+            {sales.map((sale, index) => (
+              <li key={index}>
+                {sale.itemName}: {sale.quantity} units sold at ${sale.price} each
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+      );
 };
 
 export default DailySales;
