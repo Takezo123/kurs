@@ -22,6 +22,7 @@ connectDB();
 
 //api endpoints
 app.use("/api/food",foodRouter)
+
 app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter )
 app.use("/api/cart",cartRouter)
@@ -36,6 +37,3 @@ app.get("/",(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server started on http://localhost:${port}`)
 })
-
-//mongodb+srv://greatstack:186312@cluster0.ovanjzw.mongodb.net/?
-//retryWrites=true&w=majority&appName=Cluster0

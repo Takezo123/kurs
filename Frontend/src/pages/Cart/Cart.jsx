@@ -35,12 +35,12 @@ const Cart = () => {
     <div className='cart'>
       <div className="cart-items">
         <div className="cart-items-title">
-          <p>Items</p>
-          <p>Title</p>
-          <p>Price</p>
-          <p>Quantity</p>
-          <p>Total</p>
-          <p>Remove</p>
+          <p>Товары</p>
+          <p>Название</p>
+          <p>Цена</p>
+          <p>Колличество</p>
+          <p>Всего</p>
+          <p>Удалить</p>
         </div>
         <br></br>
         <hr></hr>
@@ -65,37 +65,37 @@ const Cart = () => {
       </div>
       <div className="cart-bottom">
         <div className="cart-total">
-          <h2>Cart Totals</h2>
+          <h2>Корзина</h2>
           <div>
             <div className='cart-total-details'>
-              <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>Сумма заказа</p>
+              <p>$ {getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className='cart-total-details'>
-              <p>Delivery Fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+              <p>Цена доставки</p>
+              <p>$ {getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr />
             <div className='cart-total-details'>
-              <b>Total</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalWithDiscount() + 2}</b>
+              <b>Итого</b>
+              <b>$ {getTotalCartAmount() === 0 ? 0 : getTotalWithDiscount() + 2}</b>
             </div>
           </div>
-          <button onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button onClick={() => navigate('/order')}>Перейти к оплате</button>
         </div>
         <div className='cart-promocode'>
-          <p>Checkout</p>
+          <p>Промокод</p>
           <div className='cart-promocode-input'>
           <input
             type="text"
-            placeholder="Enter coupon code"
+            placeholder="Ваш промокод"
             value={couponCode}
             onChange={(e) => setCouponCode(e.target.value)}
           />
-          <button onClick={applyCoupon}>Apply Coupon</button>
+          <button onClick={applyCoupon}>Использовать промокод</button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          {discount > 0 && <b>Discount Applied: {discount}%</b>}
+          {discount > 0 && <b> Сумма скидки: {discount}%</b>}
           </div>
         </div>
       </div>

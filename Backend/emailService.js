@@ -1,45 +1,60 @@
 // emailService.js
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-// Create a transporter using your email service credentials
+// Загружаем переменные окружения из .env файла
+dotenv.config();
+
+// Настройка SMTP сервера Яндекса
 const transporter = nodemailer.createTransport({
-  service: 'mailru', // Use your email service provider (e.g., Gmail, Outlook)
+  host: 'smtp.yandex.ru',
+  port: 465, // Порт для SSL
+  secure: true, // true для 465, false для других портов
   auth: {
-    user: 'Dodoptica188@mail.ru', // Replace with your email
-    pass: 'Dodoptica123123'   // Replace with your email password or app-specific password
+    user: process.env.SMTP_USER, // Ваш email на Яндексе
+    pass: process.env.SMTP_PASSWORD // Ваш пароль или App password
   }
 });
 
-// Function to send email
-const sendOrderEmail = (orderDetails) => {
+const sendOrderEmail = ({ orderId, items, amount, email }) => {
+  const itemDetails = items.map(item => `${item.name} x ${item.quantity}`).join(', ');
+  const emailText = `
+    Спасибо за ваш заказ!
+    Номер заказа: ${orderId}
+    Товары: ${itemDetails}
+    Сумма: ${amount / 100} RUB
+  `;
+
   const mailOptions = {
-    from: 'Dodoptica188@mail.ru', // Sender address
-    to: orderDetails.email, // List of recipients
-    subject: 'Order Confirmation', // Subject line
-    text: `Thank you for your order!\n\nHere are your order details:\n${orderDetailsSummary(orderDetails)}` // Plain text body
+    from: process.env.SMTP_USER,
+    to: email, // Email заказчика
+    subject: 'Подтверждение заказа',
+    text: emailText
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('Error sending email:', error);
+      console.error('Ошибка отправки письма заказчику:', error);
     } else {
-      console.log('Email sent:', info.response);
+      console.log('Письмо заказчику отправлено:', info.response);
+    }
+  });
+
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminMailOptions = {
+    from: process.env.SMTP_USER,
+    to: adminEmail,
+    subject: 'Новый заказ',
+    text: `Новый заказ: ${orderId}\nТовары: ${itemDetails}\nСумма: ${amount / 100} RUB`
+  };
+
+  transporter.sendMail(adminMailOptions, (error, info) => {
+    if (error) {
+      console.error('Ошибка отправки письма администратору:', error);
+    } else {
+      console.log('Письмо администратору отправлено:', info.response);
     }
   });
 };
 
-// Helper function to format order details
-const orderDetailsSummary = (orderDetails) => {
-  return `
-Order Number: ${orderDetails.orderId}
-Name: ${orderDetails.firstName} ${orderDetails.lastName}
-Email: ${orderDetails.email}
-Phone: ${orderDetails.phone}
-Address: ${orderDetails.street}, ${orderDetails.city}, ${orderDetails.state}, ${orderDetails.zipcode}, ${orderDetails.country}
-Items: ${orderDetails.items.map(item => `${item.name} x ${item.quantity}`).join(', ')}
-Total Amount: $${orderDetails.amount}
-  `;
-};
-
 export default sendOrderEmail;
-// UB1JP3ZSSU967EUMVJULZDA9
