@@ -31,7 +31,18 @@ const PlaceOrder = () => {
     const { name, value } = event.target;
     setData(prevData => ({ ...prevData, [name]: value }));
   };
-  
+
+  const getTotalWithDiscount = () => {
+    const total = getTotalCartAmount();
+    console.log(`Original Total: ${total}`);
+    if (discount > 0) {
+      const discountedTotal = total - (total * (discount / 100));
+      console.log(`Discounted Total: ${discountedTotal}`);
+      return discountedTotal;
+    }
+    return total;
+  };
+
   const placeOrder = async (event) => {
     event.preventDefault();
     let orderItems = [];
@@ -41,8 +52,9 @@ const PlaceOrder = () => {
         orderItems.push(itemInfo);
       }
     });
-    
-    let totalAmount = getTotalWithDiscount() + 2; // Including delivery fee
+
+    let totalAmount = Math.round((getTotalWithDiscount() + 2) * 100) / 100; // Including delivery fee and rounding
+    console.log(`Total Amount (with delivery): ${totalAmount}`);
     let orderData = {
       address: data,
       items: orderItems,
@@ -61,15 +73,6 @@ const PlaceOrder = () => {
       console.error("Order placement error:", error);
       alert("Error placing order");
     }
-  };
-
-  // Calculate total amount after applying the discount
-  const getTotalWithDiscount = () => {
-    const total = getTotalCartAmount();
-    if (discount > 0) {
-      return total - (total * (discount / 100));
-    }
-    return total;
   };
   
   const navigate = useNavigate();
@@ -108,7 +111,7 @@ const PlaceOrder = () => {
           <div>
             <div className='cart-total-details'>
               <p>Сумма товаров</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>${getTotalCartAmount().toFixed(2)}</p> {/* Rounded for display */}
             </div>
             <hr/>
             <div className='cart-total-details'>
@@ -118,7 +121,7 @@ const PlaceOrder = () => {
             <hr/>
             <div className='cart-total-details'>
               <b>Всего</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalWithDiscount() + 2}</b>
+              <b>${getTotalCartAmount() === 0 ? 0 : (getTotalWithDiscount() + 2).toFixed(2)}</b> {/* Rounded for display */}
             </div>
           </div>
           <button type='submit'>Оплатить</button>

@@ -23,15 +23,15 @@ const DailySales = () => {
 
     if (loading) return <p>Loading daily sales...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (sales.length === 0) return <p>No sales data available for today.</p>;
+    if (sales.length === 0) return <p>Сегодня скидок нет.</p>;
 
     return (
         <div>
-          <h2>Daily Sales</h2>
+          <h2>Скидки</h2>
           <ul>
             {sales.map((sale, index) => (
               <li key={index}>
-                {sale.itemName}: {sale.quantity} units sold at ${sale.price} each
+                {sale.itemName}: в колличестве {sale.quantity} можно заказать по {sale.price} $
               </li>
             ))}
           </ul>

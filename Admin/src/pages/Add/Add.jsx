@@ -88,16 +88,7 @@ const Add = ({ url }) => {
                         <input onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='$20' required />
                     </div>
                 </div>
-                <div className="add-product-type flex-col">
-                    <p>Is this a sale product?</p>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isSale}
-                            onChange={() => setIsSale(!isSale)}
-                        /> Yes
-                    </label>
-                </div>
+              
                 <button type='submit' className='add-btn'>Add Product</button>
             </form>
         </div>

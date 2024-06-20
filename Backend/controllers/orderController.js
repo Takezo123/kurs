@@ -1,4 +1,4 @@
-// orderControllers.js
+// orderController.js
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
@@ -11,7 +11,6 @@ const placeOrder = async (req, res) => {
   const frontend_url = "http://localhost:5173";
 
   try {
-    // Creating a new order
     const { userId, items, amount, address, email } = req.body;
     const newOrder = new orderModel({
       userId,
@@ -21,15 +20,6 @@ const placeOrder = async (req, res) => {
     });
 
     const savedOrder = await newOrder.save();
-
-    // Send order confirmation email
-    sendOrderEmail({
-      orderId: savedOrder._id,
-      ...address,
-      items,
-      amount,
-      email, // Assuming email is part of the address or separate field
-    });
 
     // Clear user cart
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
@@ -77,7 +67,16 @@ const verifyOrder = async (req, res) => {
   const { orderId, success } = req.body;
   try {
     if (success === "true") {
-      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      const order = await orderModel.findByIdAndUpdate(orderId, { payment: true });
+
+      // Отправляем email после успешного подтверждения заказа
+      sendOrderEmail({
+        orderId,
+        items: order.items,
+        amount: order.amount,
+        email: order.email // Предполагается, что email был сохранен с заказом
+      });
+
       res.json({ success: true, message: "Order successfully paid" });
     } else {
       await orderModel.findByIdAndDelete(orderId);
@@ -89,7 +88,6 @@ const verifyOrder = async (req, res) => {
   }
 };
 
-// User orders for frontend
 const userOrders = async (req, res) => {
   try {
     const orders = await orderModel.find({ userId: req.body.userId });
@@ -100,7 +98,6 @@ const userOrders = async (req, res) => {
   }
 };
 
-// Listing orders for admin panel
 const listOrders = async (req, res) => {
   try {
     const orders = await orderModel.find({});
@@ -111,7 +108,6 @@ const listOrders = async (req, res) => {
   }
 };
 
-// API for updating order status
 const updateStatus = async (req, res) => {
   try {
     await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });

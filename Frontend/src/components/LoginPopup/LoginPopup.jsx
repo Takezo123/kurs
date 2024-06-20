@@ -63,8 +63,8 @@ const LoginPopup = ({setShowLogin}) => {
             <p>By continuing,I agree to the terms of use & privacy policy.</p>
            </div>
            {currState==="Login"
-                ?<p>Create a new account?<span onClick={()=>setCurrState("Sign-Up")}>Click here</span></p>
-                :<p>Already have an account? <span onClick={()=>setCurrState("Login")}>Login here</span></p>
+                ?<p>Создать новый аккаунт?<span onClick={()=>setCurrState("Sign-Up")}>ЗАрагестрироваться</span></p>
+                :<p>Уже есть аккаунт? <span onClick={()=>setCurrState("Login")}>Войти</span></p>
                 
             }
         </form>
